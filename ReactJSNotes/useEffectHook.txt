@@ -1,0 +1,65 @@
+***useEffect Hook *** :
+
+--- The useEffect Hook allows you to perform side effects in your components
+--- useEffect accepts two arguments. The second argument is optional.
+
+e.g.
+import { useState, useEffect } from "react";
+
+function UseEffect() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCount((count) => count + 1);
+    }, 1000);
+  });
+
+  return <h1>I've rendered {count} times!</h1>;
+}
+
+export default UseEffect;
+
+--- useEffect runs on every render. That means that when the count changes, a render happens, which then triggers another effect.
+--- There are several ways to control when side effects run.
+
+1. No dependency passed:
+
+useEffect(() => {
+  //Runs on every render
+});
+
+
+2. An empty array:
+
+useEffect(() => {
+  //Runs only on the first render
+}, []);
+
+3. Props or state values:
+
+useEffect(() => {
+  //Runs on the first render
+  //And any time any dependency value changes
+}, [prop, state]);
+
+
+***Effect Cleanup*** :
+
+--- Some effects require cleanup to reduce memory leaks.
+--- We do this by including a return function at the end of the useEffect Hook.
+
+e.g. 
+function UseEffect() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setCount((count) => count + 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <h1>I've rendered {count} times!</h1>;
+}
