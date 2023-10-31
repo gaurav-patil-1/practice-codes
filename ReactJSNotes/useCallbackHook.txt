@@ -1,0 +1,27 @@
+***useCallback Hook*** :
+
+--- The useCallback hook returns a memoized version of the callback function that only changes if one of its dependencies has changed.
+--- "memoized version of the callback function" means that React will keep a saved version of that function in memory as long as its dependencies have not changed.
+
+***Memoization in useCallback*** :
+
+--- When you use useCallback to create a memoized version of a function, React keeps track of that function's dependencies (the variables listed in the dependency array). The memoized function will only be recalculated if any of these dependencies change. Otherwise, React will continue using the saved (memoized) version of the function, which can improve the performance of your application by avoiding unnecessary re-renders or recalculations.
+
+--- Basic Syntax :
+
+--- basic idea to prevent unnecessary rerenders and recalculations by resuing the same function reference.
+
+const memoizedCallback = useCallback(() => {
+    //function login here
+  }, [dependency1, dependency2]);
+
+- The first argument is the function that you want to memoize.
+- The second argument is the array of dependencies, the useCallback hook will return new memoized version of function only if one of the dependecy changed.
+
+e.g. :
+
+--- Problem :
+
+1 reason to use useCallback() is to prevent component from e-rendering unless its props are changed
+
+
