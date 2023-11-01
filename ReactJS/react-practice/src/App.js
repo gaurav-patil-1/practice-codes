@@ -3,7 +3,7 @@ import Hello from "./Components/Hello";
 // import UseRef from "./Components/UseRef/UseRef";
 // import UseEffect from "./Components/UseEffect/UseEffect";
 // import UseState from "./Components/UseState/UseState";
-// import UseCallback from "./Components/UseCallback/UseCallback";
+import UseCallback from "./Components/UseCallback/UseCallback";
 import UseMemo from "./Components/UseMemo/UseMemo";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
       {/* <UseRef /> */}
       {/* <UseEffect /> */}
       {/* <UseState /> */}
-      {/* <UseCallback /> */}
+      <UseCallback />
       <UseMemo />
     </div>
   );
