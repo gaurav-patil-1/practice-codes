@@ -1,0 +1,154 @@
+***Hooks Pattern*** :
+
+--- React Hooks are functions that you can use to manage a components state and lifecycle methods. React Hooks make it possible to:
+
+- add state to a functional component
+- manage a component's lifecycle without having to use lifecycle methods such as componentDidMount and componentWillUnmount
+- reuse the same stateful logic among multiple components throughout the app
+
+---Lifecycle Method : ifecycle methods are a series of functions that are automatically called at specific points in a component's life.
+
+
+
+***State Hook*** :
+
+
+--- React provides a hook that manages state within a functional component, called useState.
+--- restructuring class component into functional component using use state hook
+
+- In order to use the useState hook, we need to access the useState method that React provides for us
+
+We can destructure two values from the useState method:
+1. The current value of the state.
+2. The method with which we can update the state.
+
+Problem :
+import React from "react";
+class ClassComponent extends React.Component {
+  constructor() {
+    super();
+    this.state = { input: "" };
+    this.handleInput = this.handleInput.bind(this);
+  }
+  handleInput(e) {
+    this.setState({ input: e.target.value });
+  }
+  render() {
+    return (
+      <>
+        <input onChange={this.handleInput} value={this.state.input} />
+        {this.state.input}
+      </>
+    );
+  }
+}
+export default ClassComponent;
+
+Solution with useState Hook
+e.g.
+import React, { useState } from "react";
+
+const HooksPattern = () => {
+  const [input, setInput] = useState("");
+  return (
+    <>
+      <input
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+        value={input}
+      />
+      {input}
+    </>
+  );
+};
+
+export default HooksPattern;
+
+The value of the input field is equal to the current value of the input state, just like in the class component example. When the user types in the input field, the value of the input state updates accordingly, using the setInput method.
+
+
+
+***Effect Hook*** :
+
+--- we can use the useState component to handle state within a functional component, but another benefit of class components was the possibility to add lifecycle methods to a component.
+---  The useEffect hook effectively combines the componentDidMount, componentDidUpdate, and componentWillUnmount lifecycle methods.
+- whenever user is typing anything in the input field we want to log that value in the console for that 
+- we can do so by adding dependency array to the useEffect hook, its the second arg that useEffect hooks takes.
+
+useEffect(() => {
+    console.log(`User Typed : ${input}`);
+  }, [input]);
+
+- now the value of input gets logged into the console whenever user types something in the input field.
+
+
+***Custom Hooks*** :
+
+- all hooks start with use
+- useKeyPress.js : 
+import { useState, useEffect } from "react";
+
+function useKeyPress(targetKey) {
+  const [keyPressed, setKeyPressed] = useState(false);
+
+  function handleDown({ key }) {
+    if (key === targetKey) {
+      setKeyPressed(true);
+    }
+  }
+
+  function handleUp({ key }) {
+    if (key === targetKey) {
+      setKeyPressed(false);
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("keydown", handleDown);
+    window.addEventListener("keyup", handleUp);
+    return () => {
+      window.removeEventListener("keydown", handleDown);
+      window.removeEventListener("keyup", handleUp);
+    };
+  }, []);
+  return keyPressed;
+}
+
+export default useKeyPress;
+
+- InputComponent.js :
+import React, { useState, useEffect } from "react";
+import useKeyPress from "./useKeyPress";
+
+const InputComponent = () => {
+  const [input, setInput] = useState("");
+  const qPressed = useKeyPress("q");
+  const wPressed = useKeyPress("w");
+  const lPressed = useKeyPress("l");
+  useEffect(() => {
+    console.log("User Pressed Q");
+  }, [qPressed]);
+  useEffect(() => {
+    console.log("User Pressed W");
+  }, [wPressed]);
+  useEffect(() => {
+    console.log("User Pressed L");
+  }, [lPressed]);
+  return (
+    <>
+      <input
+        type="text"
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+        value={input}
+        placeholder="Type Something"
+      />
+    </>
+  );
+};
+
+export default InputComponent;
+
+--- Instead of keeping the key press logic local to the Input component, we can now reuse the useKeyPress hook throughout multiple components, without having to rewrite the same logic over and over.
+

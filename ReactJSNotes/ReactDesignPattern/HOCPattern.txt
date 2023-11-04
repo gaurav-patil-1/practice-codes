@@ -1,0 +1,113 @@
+***HOC Pattern*** :
+
+--- If we want to use the same logic in multiple components. This logic can include applying a certain styling to components, requiring authorization, or adding a global state.
+One way of being able to reuse the same logic in multiple components, is by using the higher order component pattern. This pattern allows us to reuse component logic throughout our application.
+- A Higher Order Component (HOC) is a component that receives another component.
+- The HOC contains certain logic that we want to apply to the component that we pass as a parameter. After applying that logic, the HOC returns the element with the additional logic.
+- The Higher Order Component (HOC) pattern is particularly useful in React for sharing common functionality across multiple components
+
+e.g. If wanted to add a certain styling to multiple components in our application. Instead of creating a style object locally each time, we can simply create a HOC that adds the style objects to the component that we pass to it
+
+DogImages.js : 
+import React from "react";
+import withLoader from "./withLoader";
+
+function DogImages(props) {
+  return props.data.message.map((dog, index) => (
+    <>
+      <img src={dog} key={index} alt="img" />
+    </>
+  ));
+}
+
+export default withLoader(
+  DogImages,
+  "https://dog.ceo/api/breed/labrador/images/random/6"
+);
+
+withLoader.js :
+import React, { useState, useEffect } from "react";
+
+export default function withLoader(Element, url) {
+  return (props) => {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+      async function getData() {
+        const res = await fetch(url);
+        const data = await res.json();
+        setData(data);
+      }
+      getData();
+    }, []);
+    if (!data) {
+      return <div>...Loading</div>;
+    }
+    return <Element {...props} data={data} />;
+  };
+}
+
+--- Here we are showing "Loading..." screen to the user. Instead of adding data to the DogImages component directly, we can use a Higher Order Component that adds this logic for us.
+--- create a HOC called withLoader. A HOC should receive an component, and return that component. In this case, the withLoader HOC should receive the element which should display Loading… until the data is fetched.
+--- The Higher Order Component pattern allows us to provide the same logic to multiple components, while keeping all the logic in one single place. The withLoader HOC doesn't care about the component or url it receives: as long as it's a valid component and a valid API endpoint, it'll simply pass the data from that API endpoint to the component that we pass.
+
+
+***Composing*** :
+--- We can also compose multiple Higher Order Components. Let's say that we also want to add functionality that shows a Hovering! text box when the user hovers over the DogImages list.
+
+DogImage3.js :
+import React from "react";
+import withHover3 from "./withHover3";
+import withLoader3 from "./withLoader3";
+
+function DogImages3(props) {
+  return (
+    <div {...props}>
+      {props.hovering && <div id="hover">Hovering!</div>}
+      <div>
+        {props.data.message.map((url, index) => {
+          return <img src={url} key={index} alt="img" />;
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default withHover3(
+  withLoader3(DogImages3, "https://dog.ceo/api/breed/labrador/images/random/6")
+);
+
+withHover3.js :
+import React, { useState } from "react";
+
+export default function withHover3(Element) {
+  return (props) => {
+    const [hovering, setHovering] = useState(false);
+    return (
+      <Element
+        {...props}
+        hovering={hovering}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      />
+    );
+  };
+}
+
+withLoader.js : 
+import React, { useState, useEffect } from "react";
+
+export default function withLoader3(Element, url) {
+  return (props) => {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => setData(data));
+    }, []);
+    if (!data) {
+      return <div>Loading...</div>;
+    }
+    return <Element {...props} data={data} />;
+  };
+}
+
