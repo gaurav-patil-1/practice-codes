@@ -1,0 +1,77 @@
+***RenderPropsPattern*** :
+
+- another way of making component very reusable is by using render prop pattern
+- a render prop is a prop on a component which value is fucntion that return JSX element
+- the component itself render nothing beside render prop. instead, the compoent simply calls the render prop instead of rendering its own rendering login
+
+e.g. 
+- suppose we have a Title component, in this case the Title component shouldn't do anything beside the value that we pass. we use the render prop for this, lets pass the value that we want the Title component to render to the render prop
+
+<Title render={() => <h1>I am a render prop!</h1>} />
+
+- within the Title we can render this data by returning by returning invoked render prop
+
+const Title = (props) => props.render();
+
+- complete example :
+e.g :
+Title1.js :
+const Title1 = (props) => {
+  return props.render();
+};
+
+export default Title1;
+
+App.js :
+import "./App.css";
+import Title1 from "./components/RenderPropsPattren/Example1/Title1";
+
+function App() {
+  return (
+    <div>
+      <Title1
+        render={() => {
+          return <h1>I'm a render Prop</h1>;
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+
+-  a render prop doesn't have to be called render. Any prop that renders JSX is considered a render prop! We can rename the render props that were used in the previous example, and give them specific names instead!
+
+Title2.js :
+const Title2 = (props) => {
+  return (
+    <>
+      {props.renderFirstComponent()}
+      {props.renderSecondComponent()}
+      {props.renderThirdComponent()}
+    </>
+  );
+};
+
+export default Title2;
+
+App.js :
+
+import "./App.css";
+import Title2 from "./components/RenderPropsPattren/Example2/Title2";
+function App() {
+  return (
+    <div>
+      <Title2
+        renderFirstComponent={() => <h1>✨ First render prop! ✨</h1>}
+        renderSecondComponent={() => <h2>🔥 Second render prop! 🔥</h2>}
+        renderThirdComponent={() => <h3>🚀 Third render prop! 🚀</h3>}
+      />
+    </div>
+  );
+}
+
+export default App;
+
+
+

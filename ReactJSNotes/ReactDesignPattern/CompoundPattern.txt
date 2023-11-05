@@ -1,0 +1,63 @@
+- we often have components that belong to each other. They're dependent on each other through the shared state, and share logic together. You often see this with components like select, dropdown components, or menu items. The compound component pattern allows you to create components that all work together to perform a task.
+
+--- The compound components pattern in React allows you to create complex components that are made up of several smaller components. It's like building a LEGO set where you have different blocks (small components) that you can put together in various ways to create a structure (a complex component).
+--- Instead of passing data around using props, the compound components communicate with each other using a shared context
+
+CompoundPattern.js : 
+import React, { useState, createContext, useContext } from "react";
+
+const TabContext = createContext();
+
+const Tabs = ({ children }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <TabContext.Provider value={{ activeIndex, setActiveIndex }}>
+      <div>{children}</div>
+    </TabContext.Provider>
+  );
+};
+
+const TabList = ({ children }) => {
+  return <div>{children}</div>;
+};
+
+const Tab = ({ index, children }) => {
+  const { activeIndex, setActiveIndex } = useContext(TabContext);
+  const isActive = index === activeIndex;
+
+  return (
+    <button
+      onClick={() => setActiveIndex(index)}
+      style={{ fontWeight: isActive ? "bold" : "normal" }}
+    >
+      {children}
+    </button>
+  );
+};
+
+const TabPanels = ({ children }) => {
+  const { activeIndex } = useContext(TabContext);
+  return <div>{children[activeIndex]}</div>;
+};
+
+const TabPanel = ({ children }) => <div>{children}</div>;
+
+// Usage
+const CompoundPattern = () => (
+  <Tabs>
+    <TabList>
+      {/* These Tab components now have an index prop that indicates their position */}
+      <Tab index={0}>Tab 1</Tab>
+      <Tab index={1}>Tab 2</Tab>
+      <Tab index={2}>Tab 3</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel>Content of Tab Panel 1</TabPanel>
+      <TabPanel>Content of Tab Panel 2</TabPanel>
+      <TabPanel>Content of Tab Panel 3</TabPanel>
+    </TabPanels>
+  </Tabs>
+);
+
+export default CompoundPattern;
