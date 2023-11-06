@@ -3,7 +3,7 @@ import RadioForm from "./RadioForm";
 
 export default function RadioButton() {
   return (
-    <RadioForm default="option1">
+    <RadioForm name="option" default="option1">
       <RadioForm.Heading />
       <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
         <RadioForm.OptionType name="option1">Option 1</RadioForm.OptionType>

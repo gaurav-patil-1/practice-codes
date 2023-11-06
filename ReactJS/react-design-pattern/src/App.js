@@ -12,6 +12,7 @@ import Title1 from "./components/RenderPropsPattren/Example1/Title1";
 import Title2 from "./components/RenderPropsPattren/Example2/Title2";
 import ImageList from "./components/CompoundPattern/Example1/Images";
 import RadioButton from "./components/CompoundPattern/RadioButton/RadioButton";
+import PaymentMethod from "./components/CompoundPattern/RadioButton2/PaymentMethod";
 function App() {
   return (
     <div>
@@ -47,7 +48,8 @@ function App() {
       /> */}
       {/* <CompoundPattern /> */}
       {/* <ImageList /> */}
-      <RadioButton />
+      {/* <RadioButton /> */}
+      <PaymentMethod />
     </div>
   );
 }
