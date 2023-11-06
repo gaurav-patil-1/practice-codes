@@ -10,6 +10,7 @@ import DogImages3 from "./components/HOC_Pattern/Example3/DogImages3";
 import DogImages4 from "./components/HOC_Pattern/Example4/DogImages4";
 import Title1 from "./components/RenderPropsPattren/Example1/Title1";
 import Title2 from "./components/RenderPropsPattren/Example2/Title2";
+import ImageList from "./components/CompoundPattern/Example1/Images";
 function App() {
   return (
     <div>
@@ -44,6 +45,7 @@ function App() {
         renderThirdComponent={() => <h3>🚀 Third render prop! 🚀</h3>}
       /> */}
       {/* <CompoundPattern /> */}
+      <ImageList />
     </div>
   );
 }
