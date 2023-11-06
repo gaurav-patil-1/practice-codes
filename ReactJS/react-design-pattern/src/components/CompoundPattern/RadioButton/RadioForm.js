@@ -17,16 +17,23 @@ export default function RadioForm(props) {
 function OptionType(props) {
   const { option, onOptionChange } = useContext(RadioFormContext);
   return (
-    <ul>
+    <li>
       <input
         type="radio"
-        name={props.name}
+        name="options"
+        value={props.name}
         checked={props.name === option}
-        onChange={onOptionChange(props.name)}
+        onChange={() => onOptionChange(props.name)}
       ></input>
       {props.children}
-    </ul>
+    </li>
   );
 }
 
+function Heading() {
+  const { option } = useContext(RadioFormContext);
+  return <h1>You Have Selected : {option}</h1>;
+}
+
 RadioForm.OptionType = OptionType;
+RadioForm.Heading = Heading;
