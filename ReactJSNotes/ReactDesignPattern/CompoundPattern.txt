@@ -61,3 +61,12 @@ const CompoundPattern = () => (
 );
 
 export default CompoundPattern;
+
+
+- React.Children.map :
+
+- React.Children.map is a utility provided by React to loop over the children prop and execute a function on each of the children in that collection. In the context of the FlyOut component you've provided, React.Children.map is used to iterate over each of the children passed to FlyOut.
+- React.Children.map takes props.children as the first argument and a function as the second. This function is applied to every child in props.children.
+- For each child, React.Children.map will call React.cloneElement, which is a method to clone a React element, passing the child as the first argument and additional props as the second argument.
+- The additional props { open, toggle } are being passed to each child. This means that every child of FlyOut will receive the open state and toggle function as props, allowing the children to read the state and change it if necessary.
+
