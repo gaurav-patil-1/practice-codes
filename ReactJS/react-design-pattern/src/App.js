@@ -1,19 +1,19 @@
 import "./App.css";
-// import CompoundPattern from "./components/CompoundPattern/CompoundPattern";
-// import DogImages from "./components/HOC_Pattern/Example1/DogImages";
-// import ClassComponent from "./components/HooksPattern/ClassComponent";
-// import HooksPattern from "./components/HooksPattern/HooksPattern";
-// import InputComponent from "./components/CustomHook/InputComponent";
-// import CustomHook2 from "./components/CustomHook2/CustomHook2";
-// import DogImages1 from "./components/HOC_Pattern/Example2/DogImages1";
-// import DogImages3 from "./components/HOC_Pattern/Example3/DogImages3";
-// import DogImages4 from "./components/HOC_Pattern/Example4/DogImages4";
-// import Title1 from "./components/RenderPropsPattren/Example1/Title1";
-// import Title2 from "./components/RenderPropsPattren/Example2/Title2";
-// import ImageList from "./components/CompoundPattern/Example1/Images";
-// import RadioButton from "./components/CompoundPattern/RadioButton/RadioButton";
-// import PaymentMethod from "./components/CompoundPattern/RadioButton2/PaymentMethod";
-// import ImageList2 from "./components/CompoundPattern/Example2/Images2";
+import CompoundPattern from "./components/CompoundPattern/CompoundPattern";
+import DogImages from "./components/HOC_Pattern/Example1/DogImages";
+import ClassComponent from "./components/HooksPattern/ClassComponent";
+import HooksPattern from "./components/HooksPattern/HooksPattern";
+import InputComponent from "./components/CustomHook/InputComponent";
+import CustomHook2 from "./components/CustomHook2/CustomHook2";
+import DogImages1 from "./components/HOC_Pattern/Example2/DogImages1";
+import DogImages3 from "./components/HOC_Pattern/Example3/DogImages3";
+import DogImages4 from "./components/HOC_Pattern/Example4/DogImages4";
+import Title1 from "./components/RenderPropsPattren/Example1/Title1";
+import Title2 from "./components/RenderPropsPattren/Example2/Title2";
+import ImageList from "./components/CompoundPattern/Example1/Images";
+import RadioButton from "./components/CompoundPattern/RadioButton/RadioButton";
+import PaymentMethod from "./components/CompoundPattern/RadioButton2/PaymentMethod";
+import ImageList2 from "./components/CompoundPattern/Example2/Images2";
 import TeamSelection from "./components/CompoundPattern/RadioButton3/TeamSelection";
 function App() {
   return (
