@@ -23,7 +23,7 @@ function Team(props) {
         checked={props.team === props.teamname}
         onChange={() => props.setTeam(props.teamname)}
       />
-
+      
       {props.children}
     </li>
   );

@@ -70,3 +70,4 @@ export default CompoundPattern;
 - For each child, React.Children.map will call React.cloneElement, which is a method to clone a React element, passing the child as the first argument and additional props as the second argument.
 - The additional props { open, toggle } are being passed to each child. This means that every child of FlyOut will receive the open state and toggle function as props, allowing the children to read the state and change it if necessary.
 
+

@@ -1,0 +1,86 @@
+***TypeScript*** :
+
+-TypeScript is superset of JavaScript which adds static typing.
+- means TypeScript adds syntax on the top of JavaScript which allows developers add the types.
+- TypeScript allows specifying the type of the data being passed around within the code and have ability to report errors when types doesn't match.
+
+
+
+***Configuring the TypeScript Compiler*** :
+
+- this file is cruicial for managing the compilation process, this file allows us to manage various compilation options that suits our project needs
+
+--- create tsconfig.json file with :
+
+npx tsc --init
+
+it'll create tsconfig.json file with :
+
+Created a new tsconfig.json with:                                                                                       
+                                                                                                                     TS 
+  target: es2016
+  module: commonjs
+  strict: true
+  esModuleInterop: true
+  skipLibCheck: true
+  forceConsistentCasingInFileNames: true
+
+target:es2016 : This setting specifies the ECMAScript target version for the compiled JavaScript. By setting it to es2016, TypeScript will compile your code to be compatible with the ECMAScript 2016 standard, also known as ECMAScript 7.
+
+module:commonjs : This option defines the module system to use. Setting it to commonjs 
+
+strict: true : Enabling strict mode enables type-checking behaviors in TypeScript to catch more potential errors. This includes strict null checks, no implicit any, strict function types, and more.
+
+esModuleInterop: true: This setting is about interoperability between CommonJS and ES Modules. When set to true, it allows you to use default imports from modules without a default export. This can be useful when importing modules written 
+in CommonJS style in your ES Module syntax.
+
+skipLibCheck: true: This option tells TypeScript to skip type checking of declaration files (.d.ts files).
+Without this setting: TypeScript checks all the type definitions of all libraries included in your project, which can be time-consuming.
+With this setting: TypeScript skips the type checking of declaration files of libraries, which can speed up the compilation process, particularly in large projects.
+
+forceConsistentCasingInFileNames: true: This ensures that the case of the file names is consistent throughout your project.
+
+
+
+***TypeScript Simple Types*** :
+
+There are three main primitives in JavaScript and TypeScript.
+
+boolean - true or false values
+number - whole numbers and floating point values
+string - text values like "TypeScript Rocks"
+
+There are also 2 less common primitives used in later versions of Javascript and TypeScript.
+
+bigint - whole numbers and floating point values, but allows larger negative and positive numbers than the number type.
+symbol are used to create a globally unique identifier.
+
+
+
+***Type Assignment*** :
+
+Explicit : writing out the type
+
+e.g. let fName:string="Gaurav";
+
+Implicit : TypeScript will guess the type based on the assigned value
+
+e.g. let lName="Patil";
+
+--- Note: Having TypeScript "guess" the type of a value is called infer
+
+
+
+***Error In Type Assignment*** :
+
+let fName:string="Gaurav";
+fname=23; //error : Type 'number' is not assignable to type 'string'
+
+in case of implicit type assignment 
+
+let lName="Patil";
+lName=23; //error : Type 'number' is not assignable to type 'string'
+
+
+***Unable to Infer*** :
+
