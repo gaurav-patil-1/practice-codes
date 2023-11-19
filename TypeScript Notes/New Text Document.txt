@@ -84,3 +84,455 @@ lName=23; //error : Type 'number' is not assignable to type 'string'
 
 ***Unable to Infer*** :
 
+// Implicit any as JSON.parse doesn't know what type of data it returns so it can be "any" thing...
+const json = JSON.parse("55");
+// Most expect json to be an object, but it can be a string or a number like this example
+console.log(typeof json);
+
+
+
+***TypeScript Simple Types*** :
+
+boolean
+number
+string
+
+-- 2 less common non primitive types
+bigint
+symbol
+
+
+
+***TypeScript Special Types*** :
+
+- TypeScript has some special type that may not refer to any specific data
+
+--- Type : any
+
+any is the type that disables type checking and allows using any type of data
+e.g. 
+let v:any=true;
+v="Gaurav Patil"; //OK
+
+
+--- Type : unknown
+type unknown represent any value similar to type any but it also enforses type checking which makes it safer
+
+e.g.
+let value:unknown;
+
+value=23;
+value="Gaurav Patil";
+value=true;
+
+if(typeof value === "string"){
+    console.log(value.toUpperCase());
+}
+else{
+    console.log("Value is not a String");
+}
+
+
+--- Type : never 
+
+never effectively throws an errror when it is defined
+
+e.g.
+let x:never=true;  //Error:Type boolean is not assignable to type never
+
+--- Type : undefined and Type : null
+
+undefined and null are the types that referes to javascript predefined null and undefined
+
+
+
+***TypeScript Arrays*** :
+
+- Syntax : 
+
+const names:string[]=["Gaurav","Akshay","Yashodeep","Mayur"];
+names.push("Pranav"); //No Error
+names.push(3); // Error : Argument of type 'number' is not assignable to parameter of type 'string'
+
+--- Readonly : prevent array from being changed 
+
+const teams: readonly string[]=["FC Barcelona","Real Madrid","PSG","Valencia","Manchester City","Chelsea"];
+teams.pop(); //Error : Property 'pop' does not exist on type 'readonly string[]'
+
+--- Type Inference :
+
+TS can infer the type of an array if it has values
+
+let numbers=[1,2,3,4,5];
+numbers.push("Football"); //Error : Argument of type 'string' is not assignable to parameter of type 'number'
+
+
+
+***TypeScript Tuples*** :
+
+- touple is a typed array with predefined length and type for each index
+
+- syntax :
+
+let myTouple:[number,string,boolean];
+myTouple=[23,"Gaurav",true];
+
+- Note : we must maintain the order while assigning the values otherwise it'll throw and error
+
+--- ReadOnly Touples :
+
+let ourTouple:[number,string,boolean];
+ourTouple=[23,"Gaurav",true];
+ourTouple.push("Hello World!");
+//There is no type safety in our touple for indexes 3+
+console.log(ourTouple);
+
+e.g.
+let teamTouple: readonly [number,string,boolean]=[1,"FC Barcelona",true];
+teamTouple.push("Real Madrid"); //Error : Property 'push' does not exist on type 'readonly [number, string, boolean]'
+
+
+--- Named Touples :
+named touples allows us to provide context for our values at each index
+
+const graph: [x:number, y:number]=[55.2,41.3];
+
+- destructuring touples
+
+const [x,y]=graph;
+console.log(`x: ${x}`);
+console.log(`y: ${y}`);
+
+
+
+*** TypeScript Object Types*** :
+
+typescript has special syntax for typing objects.
+
+- synatx :
+
+const car:{type:string, model:string,year:number}={
+    type:"Toyota",
+    model:"Corolla",
+    year:2009
+};
+
+- type inference
+TS can infer the types of the properties based on their values
+
+const myCar={
+    name:"Audi"
+};
+
+myCar.name="BMW"; //Ok
+myCar.name=23;// Error : Type 'number' is not assignable to type 'string'
+
+
+--- Optional Property
+
+optional properties are properties which dont have to be defined in the object definition
+
+//e.g without optional property
+const car1:{type:string, mileage:number}={
+    type:"Audi"
+} //Error : Property 'mileage' is missing in type '{ type: string; }' but required in type '{ type: string; mileage: number; }'
+
+//e.g with optional property
+const car2:{type:string, mileage?:number}={
+    type:"BMW"
+}; //Ok
+car2.mileage=8;
+
+
+--- Index Signatures :
+index signatures can be used for objects without a defined list of properties
+means index signatures are used when we dont know in advance what the property names will be but we do know the type of value associated with that property names
+
+e.g.
+const nameAgeMap:{[index : string] : number}={};
+nameAgeMap.Jack=25;
+nameAgeMap.Mark="fifty"; //Error : Type 'string' is not assignable to type 'number'
+
+
+
+*** TypeScript Enums*** :
+enums is a special class that represent the group of constants
+enums comes with 2 flavors string and numeric
+
+--- Numeric Enums : Default
+enum Directions{
+    North,
+    East,
+    South,
+    West
+};
+
+let currentDirection=Directions.North;
+// logs 0
+console.log(currentDirection);
+currentDirection="North"; // Error : Type '"North"' is not assignable to type 'Directions'
+
+
+--- Numeric Enums : Initialized
+we can the value of first numeric enum and have it auto increment fot that
+
+enum cardinalDirections{
+    North=1,
+    East,
+    South,
+    West
+};
+
+console.log(cardinalDirections.North); //1
+console.log(cardinalDirections.West); //4
+
+
+--- Numeric Enums : Fully Initialized
+we can assign unique number value to each enum constant
+
+enum StatusCodes{
+    NotFound=404,
+    Success=200,
+    Accepted=202,
+    BadRequest=400
+}
+
+console.log(StatusCodes.NotFound); //404
+console.log(StatusCodes.Success); //200
+
+
+--- String Enums :
+enums can also contain strings. this is more common than numeric enum, because of their reliability and intent.
+
+
+
+***Aliases and Interfaces*** :
+
+TS allows types to be defined seperately from the variables that use them
+aliases and interfaces allows types to be easily shared between different variables and object
+
+
+--- Type Aliases :
+
+type aliases allows defining types with custom names(as Alias)
+ 
+e.g.
+type CarYear=number;
+type CarType=string;
+type CarModel=string;
+
+type Car={
+    year:CarYear,
+    type: CarType,
+    model:CarModel
+}
+
+const carYear:CarYear=2001;
+const carType:CarType="Toyota";
+const carModel:CarModel="Corolla";
+
+const car:Car={
+    year:carYear,
+    type:carType,
+    model:carModel
+}
+
+
+--- Interfaces :
+interfaces are similar to type aliases to Type Aliases except they only apply to object types
+
+interface Reactangle{
+    height:number,
+    width:number
+};
+
+const rectangle:Reactangle={
+    height:20,
+    width:10
+};
+
+
+--- Extending Interfaces :
+
+interfaces can extend each other's definition
+extending an interface means you are creating a new interface with the same properties as original, plus something new
+
+
+
+***TypeScript Union Types*** :
+- union types are used when values are more than a single type
+- such that when property will be string or a number
+
+--- Union | (OR)
+
+function printStatusCode(code:string | number){
+    console.log(`My status code is : ${code}`);
+}
+
+printStatusCode(401);
+printStatusCode("400");
+
+
+
+***TypeScript Functions*** :
+
+--- Return Type :
+the type of the value returned by the function can be explicitely defined
+
+function getTime():number{
+    return new Date().getTime();
+}
+
+--- Void Return Type :
+the type void indicates that the function doesn't return any value
+
+function printHello():void{
+    console.log("Hello");
+}
+
+--- Parameters :
+function parameters are typed with a similar syntax as variable declaration
+
+function addition(a:number,b:number){
+    console.log(`Addition : ${a+b}`);
+}
+
+
+--- Optional Parameters :
+by default TS will assume all the parameters are required, but they can be explicitely marked as optional
+
+function add(a:number,b:number,c?:number){
+    console.log(`Add : ${a+b}`);
+}
+
+--- Default Parameters :
+for parameters with default values, the default value goes after type annotation
+
+function multiply(a:number,b:number,c:number=1){
+    console.log(`Multiplication : ${a*b*c}`);
+}
+
+--- Named Parameters :
+named parameters follows same pattern as typing normal parameters
+
+function divide({dividend,divisor}:{dividend:number,divisor:number}){
+    return dividend/divisor;
+}
+
+
+---Rest Parameters :
+rest parameters can be typed like normal parameters but the type must be an array as rest parameter are always an array
+
+function addNumbers(a:number,b:number,...rest:number[]){
+    return a+b+rest.reduce((c,d)=>c+d,0);
+}
+
+
+--- Type Alias :
+function types can be specified seperately from functions with type aliases
+
+type Negate=(value:number)=>number;
+
+const negateFunction:Negate=(value)=>value*-1;
+
+
+
+***TypeScript Casting*** :
+Type casting in TS is used to tell the compiler that the variable should be treated as the different type. 
+e.g working with unknown data type
+
+--- Casting with as :
+
+let g:unknown = "Gaurav";
+console.log((g as string).toUpperCase());
+
+Note : 
+1) Casting doesn't actually change the type of the data within the variable, for example the following code will not work as expected since the variable x is still holds a number.
+let x: unknown = 4;
+console.log((x as string).length); // prints undefined since numbers don't have a length
+
+2) TypeScript will still attempt to typecheck casts to prevent casts that don't seem correct, for example the following will throw a type error since TypeScript knows casting a string to a number doesn't makes sense without converting the data:
+console.log((4 as string).length); // Error: Conversion of type 'number' to type 'string' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+The Force casting section below covers how to override this.
+
+--- Casting with <>
+
+let h:unknown = "hello";
+console.log((<string>h).toUpperCase());
+
+
+
+***TypeScript Classes*** :
+TS adds types and visibilty modifiers to JS classes
+
+
+--- Members : Types
+class Person{
+    name:string | undefined;
+}
+
+const person=new Person();
+person.name="Gaurav";
+
+--- Members : visibility :
+
+public - (default) allows access to the class member from anywhere
+private - only allows access to the class member from within the class
+protected - allows access to the class member from itself and any classes that inherit it
+
+
+// Readonly :
+similar to arrays readonly can prevent the class members from being changed
+
+class Person2{
+    private readonly name:string;  // name cannot be changed after this initial definition, which has to be either at it's declaration or in the constructor
+    public constructor(name:string){
+        this.name=name;
+    }
+    public getName():string{
+        return this.name;
+    }
+}
+
+const person2=new Person2("Gaurav");
+console.log(person1.getName());
+
+
+--- Inheritance : Implements 
+
+interface Shape{
+    getArea:()=>number;
+}
+
+class Rectangle implements Shape{
+    public constructor(protected readonly width:number,protected readonly height:number){
+
+    }
+    public getArea():number{
+        return this.width*this.height;
+    };
+}
+
+
+--- Inheritance : Extends 
+
+interface Shape1{
+    getArea:()=>number;
+}
+
+class Rectangle1 implements Shape1{
+    public constructor(protected readonly width:number,protected readonly height:number){};
+    getArea():number{
+        return this.width*this.height;
+    }
+}
+
+class Square1 extends Rectangle1{
+    public constructor(width:number){
+        super(width,width);
+    }
+    //getArea() gets inherited from rectangle
+}
+
+
+
