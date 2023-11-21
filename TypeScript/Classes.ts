@@ -75,3 +75,32 @@ class Square1 extends Rectangle1{
 }
 
 
+//Override :
+//when a class extends another class it can replace the member of the parent class with different name
+
+interface Shape3{
+    getArea:()=>number;
+}
+
+class Rectangle3 implements Shape{
+    public constructor(protected readonly width:number,protected readonly height:number){}
+    getArea():number{
+        return this.width*this.height
+    }
+    public toString():string{
+        return `Rectangle[Width : ${this.width}, height : ${this.height}]`;
+    }
+}
+
+class Square3 extends Rectangle3{
+    public constructor(width:number){
+        super(width,width);
+    }
+    public override toString():string{
+        return `Square[side : ${this.width}]`;
+    }
+}
+
+const sq= new Square3(10);
+console.log(sq);
+
